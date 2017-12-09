@@ -9,7 +9,6 @@ namespace ZoLog
     {
         static void Main(string[] args)
         {
-
             ZoLog log = new ZoLog(new Configuration());
 
             log.LogDebug("this is LogDebug");
@@ -28,6 +27,7 @@ namespace ZoLog
                     IsRun = false;
                 }
             }
+
         }
     }
 }

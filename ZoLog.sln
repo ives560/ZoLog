@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoLog", "ZoLog\ZoLog.csproj", "{65595A79-289E-4393-B867-AE8B7C8304DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoLog", "ZoLog\ZoLog.csproj", "{B2D8E5DB-085E-4BE4-A6B9-F628DB552113}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoLogTest", "ZoLogTest\ZoLogTest.csproj", "{A7205952-DA42-44AE-8766-AF123317CEBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{65595A79-289E-4393-B867-AE8B7C8304DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65595A79-289E-4393-B867-AE8B7C8304DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65595A79-289E-4393-B867-AE8B7C8304DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65595A79-289E-4393-B867-AE8B7C8304DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D8E5DB-085E-4BE4-A6B9-F628DB552113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D8E5DB-085E-4BE4-A6B9-F628DB552113}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D8E5DB-085E-4BE4-A6B9-F628DB552113}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D8E5DB-085E-4BE4-A6B9-F628DB552113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7205952-DA42-44AE-8766-AF123317CEBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7205952-DA42-44AE-8766-AF123317CEBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7205952-DA42-44AE-8766-AF123317CEBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7205952-DA42-44AE-8766-AF123317CEBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

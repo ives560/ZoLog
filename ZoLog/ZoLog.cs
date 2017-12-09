@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ZoLog
 {
-    class ZoLog
+    public class ZoLog
     {
 
         private Configuration _configuration;
@@ -59,7 +59,7 @@ namespace ZoLog
         /// </summary>
         /// <param name="label">Label to use when logging</param>
         /// <param name="content">A string with a message or an object to call ToString() on it</param>
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods",Justification = "The called function validates it.")]
+        //[SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods",Justification = "The called function validates it.")]
         public void Log(Enum label, string content) => Log(label.ToString(), content);
 
         /// <summary>

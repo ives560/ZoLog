@@ -6,7 +6,7 @@ namespace ZoLog
     /// <summary>
     /// Optional configurations that can be used when initializing the logger.
     /// </summary>
-    [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
+    //[SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
     public struct Configuration
     {
         /// <summary>
