@@ -15,11 +15,9 @@ namespace ZoLog
 
         private static OpenStreams _openStreams;
 
-        private static FolderCleaner _cleaner;
-
         private static object _lock;
 
-        private static int _longestLabel;
+        private static int _longestLabel=5;
 
         private static bool _disposed;
 
@@ -32,60 +30,33 @@ namespace ZoLog
         /// <param name="configuration">Configuration to use</param>
         public ZoLog(Configuration configuration)
         {
-            _configuration = configuration;
-
-            if (string.IsNullOrEmpty(_configuration.Directory))
-                _configuration.Directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
-
-            _openStreams = new OpenStreams(_configuration.Directory);
-
-            if (_configuration.DeleteOldFiles.TotalDays<8)
-            {
-                _configuration.DeleteOldFiles = new TimeSpan(8, 0, 0, 0);
-            }
-
-            TimeSpan cleanUpTime = new TimeSpan(1, 0, 0, 0);
-
-            _cleaner = new FolderCleaner(_configuration.Directory, _openStreams, _configuration.DeleteOldFiles, cleanUpTime);
-
-            if (string.IsNullOrEmpty(_configuration.DateTimeFormat))
-                _configuration.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-
-
-            _lock = new object();
-            _longestLabel = 5;
+            Configuration(configuration);
         }
 
-        public ZoLog()
-        {
-
-        }
-
-
-        public void Configuration(Configuration configuration)
+        /// <summary>
+        /// 配置日志
+        /// </summary>
+        /// <param name="configuration"></param>
+        private void Configuration(Configuration configuration)
         {
             _configuration = configuration;
 
             if (string.IsNullOrEmpty(_configuration.Directory))
                 _configuration.Directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
 
-            _openStreams = new OpenStreams(_configuration.Directory);
 
-            if (_configuration.DeleteOldFiles.TotalDays < 8)
+            if (_configuration.DeleteOldFiles.TotalDays < 1)
             {
-                _configuration.DeleteOldFiles = new TimeSpan(8, 0, 0, 0);
+                _configuration.DeleteOldFiles = new TimeSpan(1, 0, 0, 0);
             }
-
-            TimeSpan cleanUpTime = new TimeSpan(1, 0, 0, 0);
-
-            _cleaner = new FolderCleaner(_configuration.Directory, _openStreams, _configuration.DeleteOldFiles, cleanUpTime);
 
             if (string.IsNullOrEmpty(_configuration.DateTimeFormat))
                 _configuration.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
+            _openStreams = new OpenStreams(_configuration);
+
 
             _lock = new object();
-            _longestLabel = 5;
             _configed = true;
         }
 
@@ -94,7 +65,6 @@ namespace ZoLog
         /// </summary>
         /// <param name="label">Label to use when logging</param>
         /// <param name="content">A string with a message or an object to call ToString() on it</param>
-        //[SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods",Justification = "The called function validates it.")]
         public static void Log(Enum label, string content) => Log(label.ToString(), content);
 
         /// <summary>
@@ -104,6 +74,8 @@ namespace ZoLog
         /// <param name="content">A string with a message or an object to call ToString() on it</param>
         public static void Log(string label, object content)
         {
+            if (_configed == false)
+                return;
 
             var date = DateTime.Now;
             var formattedDate = date.ToString(_configuration.DateTimeFormat, CultureInfo.InvariantCulture);
@@ -162,9 +134,6 @@ namespace ZoLog
 
                 if (_openStreams != null)
                     _openStreams.Dispose();
-
-                if (_cleaner != null)
-                    _cleaner.Dispose();
 
                 _disposed = true;
                 _configed = false;

@@ -4,32 +4,25 @@ using System.Diagnostics.CodeAnalysis;
 namespace ZoLog
 {
     /// <summary>
-    /// Optional configurations that can be used when initializing the logger.
+    /// 初始化日志时的配置
     /// </summary>
-    //[SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
     public struct Configuration
     {
-        /// <summary>
-        /// True to use UTC time rather than local time.
-        /// Defaults to false.
-        /// </summary>
-        public bool UseUtcTime { get; set; }
 
         /// <summary>
-        /// If other than null it sets to delete any file in the log folder that is older than the specified time.
-        /// Defaults to null.
+        /// 日志文件夹保留文件的最大时间
         /// </summary>
         public TimeSpan DeleteOldFiles { get; set; }
 
         /// <summary>
-        /// Format string to use when calling DateTime.Format.
-        /// Defaults to "yyyy-MM-dd HH:mm:ss".
+        /// 调用DateTime.Format时的格式.
+        /// 默认是 "yyyy-MM-dd HH:mm:ss".
         /// </summary>
         public string DateTimeFormat { get; set; }
 
         /// <summary>
-        /// Directory where to create the log files.
-        /// Defaults to a local "logs" directory.
+        /// 日志文件存放的目录.
+        /// 默认为当前目录的"logs"文件夹.
         /// </summary>
         public string Directory { get; set; }
 

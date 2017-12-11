@@ -12,17 +12,27 @@ namespace ZoLog
     class OpenStreams
     {
 
-        private readonly string _directory;
+        /// <summary>
+        /// 日志文件完整路径
+        /// </summary>
+        string _filepath;
 
-        //private StreamWriter _streams;
+        private readonly Configuration _config;
 
+        /// <summary>
+        /// 写入日志文件的流
+        /// </summary>
+        private StreamWriter _streams;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly object _lock;
 
-
-        internal OpenStreams(string directory)
+        internal OpenStreams(Configuration config)
         {
-            _directory = directory;
-            //_streams = null;
+            _config = config;
+            _streams = null;
             _lock = new object();
 
         }
@@ -31,10 +41,8 @@ namespace ZoLog
         {
             lock (_lock)
             {
-                StreamWriter streams = GetStream(date.Date);
-                streams.WriteLine(content);
-                streams.Close();
-                streams.Dispose();
+                _streams = GetStream(date.Date);
+                _streams.WriteLine(content);
             }
         }
 
@@ -43,29 +51,76 @@ namespace ZoLog
         {
             // Building stream's filepath
             var filename = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + ".log";
-            var filepath = Path.Combine(_directory, filename);
+            var filepath = Path.Combine(_config.Directory, filename);
 
-            // Making sure the directory exists
-            Directory.CreateDirectory(_directory);
+            if (filepath.Equals(_filepath) == true)
+            {
+                return _streams;
+            }
+
+            Dispose();//关闭当前日志文件
+
+            Directory.CreateDirectory(_config.Directory);//创建日志文件夹
+
+            FolderCleaner();//删除旧的日志文件
 
             // Opening the stream
-            var stream = new StreamWriter(
-                new FileStream(
-                    filepath, FileMode.Append, FileSystemRights.AppendData, FileShare.ReadWrite, 4096,
-                    FileOptions.None
-                )
-            );
+            StreamWriter stream = new StreamWriter(
+                                        new FileStream(
+                                            filepath, FileMode.Append, FileSystemRights.AppendData, FileShare.ReadWrite, 4096,
+                                            FileOptions.None));
             stream.AutoFlush = true;
-
-            // Storing the created stream
-            //_streams = stream;
-
+            _filepath = filepath;
             return stream;
         }
 
+        /// <summary>
+        /// 删除旧的日志文件
+        /// </summary>
+        private void FolderCleaner()
+        {
+            lock (_lock)
+            {
+                try
+                {
+                    if (!Directory.Exists(_config.Directory))
+                        return;
+
+                    var now = DateTime.Now;
+
+                    var files = Directory.GetFiles(_config.Directory);
+
+                    foreach (var filepath in files)
+                    {
+                        var file = new FileInfo(filepath);
+                        var lifetime = now - file.CreationTime;
+
+                        if (lifetime >= _config.DeleteOldFiles)
+                        {
+                            file.Delete();//文件可能被占用无法删除
+                        }
+
+                    }
+                }
+                catch
+                {
+
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 关闭文件
+        /// </summary>
         public void Dispose()
         {
-
+            if(_streams != null)
+            {
+                _streams.Close();
+                _streams.Dispose();
+            }
+            
         }
     }
 }

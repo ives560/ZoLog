@@ -17,6 +17,10 @@ namespace ZoLog
 
             ZoLog.LogInfo("this is LogInfo");
 
+            Exception e = new Exception("this is Exception");
+
+            ZoLog.LogError(e);
+
             bool IsRun = true;
             while (IsRun == true)
             {
