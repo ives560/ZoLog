@@ -11,11 +11,11 @@ namespace ZoLog
         {
             ZoLog log = new ZoLog(new Configuration());
 
-            log.LogDebug("this is LogDebug");
+            ZoLog.LogDebug("this is LogDebug");
 
-            log.LogError("this is LogError");
+            ZoLog.LogError("this is LogError");
 
-            log.LogInfo("this is LogInfo");
+            ZoLog.LogInfo("this is LogInfo");
 
             bool IsRun = true;
             while (IsRun == true)
@@ -25,6 +25,14 @@ namespace ZoLog
                 if (str == "exit")
                 {
                     IsRun = false;
+                }
+                else if(str=="runlog")
+                {
+                    log = new ZoLog(new Configuration());
+                }
+                else if(str=="exitlog")
+                {
+                    log.Dispose();
                 }
             }
 

@@ -38,22 +38,6 @@ namespace ZoLog
             }
         }
 
-        private void ClosePastStreams(object ignored)
-        {
-            lock (_lock)
-            {
-                //_streams.Close();
-                //_streams.Dispose();
-                //var today = DateTime.Today;
-                //var past = _streams.Where(kvp => kvp.Key < today);
-
-                //foreach (var kvp in past)
-                //{
-                //    kvp.Value.Dispose();
-                //    _streams.Remove(kvp.Key);
-                //}
-            }
-        }
 
         private StreamWriter GetStream(DateTime date)
         {
