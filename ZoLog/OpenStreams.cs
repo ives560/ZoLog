@@ -53,7 +53,7 @@ namespace ZoLog
             var filename = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + ".log";
             var filepath = Path.Combine(_config.Directory, filename);
 
-            if (filepath.Equals(_filepath) == true)
+            if (filepath.Equals(_filepath) == true && _streams!=null)
             {
                 return _streams;
             }
